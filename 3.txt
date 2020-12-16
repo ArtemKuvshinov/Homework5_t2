@@ -1,0 +1,54 @@
+********************* External Control of File Name or Path (CWE ID 73) **************************************
+
+//Начало куска кода из вьюшки
+	<h4>Музыкальная библитека.</h4>
+	<form method="GET" action="~/MusicLibrary/Download">
+	<select id = "musicName" name="musicName">
+	<option value="">Выберите название песни.</option>
+		<option value="Vivaldi.mp3">Вивальди - Времена года</option>
+		<option value="Beethoven.mp3">Бетховен - Лунная соната</option>
+		<option value="Morricone.mp3">Энио Марриконе</option>
+		<option value="SectorOfGas.mp3">Сектор газа - Туман</option>
+	</select>
+	<input type="submit" value="Выбрать"/>
+	</form>ы
+//Конец куска кода из вьюшки
+
+
+public class MusicLibraryController : Controller
+{
+	//Какой-то код ...
+    public ActionResult Download(int TrackID)
+    {
+        const string PATH = "D:\\Musics\";
+        ActionResult result = new HttpNotFoundResult("music not found");
+
+         Dictionary<int, string> musicsDictoinary = new Dictionary<int, string>
+        {
+            {1, "Vivaldi.mp3"}
+            ,{2, "Beethoven.mp3"}
+            ,{3, "Morricone.mp3"}
+            ,{4, "SectorOfGas.mp3"}
+        };
+
+        if (musicsDictoinary.TryGetValue(ebookID, out string fullPath))    
+        {
+			string fullPathFile = PATH + musicName;
+	 
+			if (System.IO.File.Exists(fullPathFile))
+			{
+				using (var file = System.IO.File.OpenRead(fullPathFile))
+				{
+					result = new FileStreamResult(file, "application/octet-stream");
+				}
+			}			
+		}		
+		return result;
+	}
+	
+	//Какой-то код ...
+}
+		
+
+
+
